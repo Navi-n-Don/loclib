@@ -16,16 +16,19 @@ def index(request):
     num_authors=Author.objects.count()  # Метод 'all()' применён по умолчанию.
     num_genres=Genre.objects.count()     # количество жанров
     num_the_book=Book.objects.filter(title__icontains='the').count()    # количество книг, которые содержат the (без учёта регистра)
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
 
     # Отрисовка HTML-шаблона index.html с данными внутри
     # переменной контекста context
     return render(
         request,
         'index.html',
-        context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors, 'num_genres':num_genres, 'num_the_book':num_the_book},
+        context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors, 'num_genres':num_genres, 'num_the_book':num_the_book, 'num_visits':num_visits},
     )
 
-from django.views import generic
+from django.views import generic, View
+
 
 class BookListView(generic.ListView):
     model = Book
@@ -54,3 +57,27 @@ def book_detail_view(request,pk):
         'catalog/book_detail.html',
         context={'book':book_id,}
     )
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class LoanedBooksByUserListView(LoginRequiredMixin,generic.ListView):
+    """
+    Generic class-based view listing books on loan to current user.
+    """
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_borrowed_user.html'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(borrower=self.request.user).filter(status__exact='o').order_by('due_back')
+
+class LoanedBooksListView(LoginRequiredMixin,generic.ListView):
+    """
+    Generic class-based view listing books on loan to current user.
+    """
+    model = BookInstance
+    template_name ='catalog/bookinstance_list_borrowed.html'
+    paginate_by = 5
+
+    def get_queryset(self):
+        return BookInstance.objects.filter(status__exact='o').order_by('due_back')

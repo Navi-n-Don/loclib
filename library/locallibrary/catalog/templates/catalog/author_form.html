@@ -1,7 +1,22 @@
 {% extends "base_generic.html" %}
 
-{% block content %}
+{% block title %}
+    <title>
+        {% if 'create' in request.path %}
+            Add Author
+        {% elif 'update' in request.path %}
+            Update Author
+        {% endif %}
+    </title>
+{% endblock %}
 
+{% block content %}
+{% if 'create' in request.path %}
+<h1>Add Author</h1>
+{% elif 'update' in request.path %}
+<h1>Update Author</h1>
+{% endif %}
+<br>
 <form action="" method="post">
     {% csrf_token %}
     <table>

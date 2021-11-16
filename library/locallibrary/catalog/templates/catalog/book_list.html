@@ -1,7 +1,8 @@
 {% extends "base_generic.html" %}
 
+{% block title %}<title>Book List</title>{% endblock %}
 {% block content %}
-    <h1>Book List</h1>
+    <h1>Book List {% if perms.catalog.can_mark_returned %}<a href="{% url 'book_create' %}" style="margin-left: 100px;font-size: 13pt;line-height: 36px;">+ Add Book</a> {% endif %}</h1>
 
     {% if book_list %}
     <ul>

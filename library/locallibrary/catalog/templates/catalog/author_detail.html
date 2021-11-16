@@ -1,7 +1,8 @@
 {% extends "base_generic.html" %}
 
+{% block title %}<title>{{ author }}</title>{% endblock %}
 {% block content %}
-  <h1>Author: {{ author }}</h1>
+  <h1>Author: {{ author }} {% if perms.catalog.can_mark_returned %}<span style="font-size: 14pt;line-height: 36px;"><a href="{% url 'author_update' author.id %}" style="margin-left: 50px;">Update</a> <a href="{% url 'author_delete' author.id %}" style="margin-left: 50px;">Delete</a></span> {% endif %}</h1>
 
   <p><strong>First Name:</strong> {{ author.first_name }}</p>
   <p><strong>Last Name:</strong> {{ author.last_name }}</p>

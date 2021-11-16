@@ -25,9 +25,12 @@
           <li><a href="{% url 'index' %}">Home</a></li>
           <li><a href="{% url 'books' %}">All books</a></li>
           <li><a href="{% url 'authors' %}">All authors</a></li>
+      </ul>
+      <hr>
+      <ul class="sidebar-nav">
         {% if user.is_authenticated %}
           <li>User: {{ user.get_username }}</li>
-          {% if user.username == 'Librarian' %}
+          {% if user.is_staff %}
           <li><a href="{% url 'all-borrowed' %}">All Borrowed</a></li>
           {% else %}
           <li><a href="{% url 'my-borrowed' %}">My Borrowed</a></li>

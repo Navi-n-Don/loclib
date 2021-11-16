@@ -1,7 +1,8 @@
 {% extends "base_generic.html" %}
 
+{% block title %}<title>Author List</title>{% endblock %}
 {% block content %}
-    <h1>Author List</h1>
+    <h1>Author List {% if perms.catalog.can_mark_returned %}<a href="{% url 'author_create' %}" style="margin-left: 100px;font-size: 13pt;line-height: 36px;">+ Add Author</a> {% endif %}</h1>
 
     {% if author_list %}
     <ul>

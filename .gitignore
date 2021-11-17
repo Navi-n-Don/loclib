@@ -1,9 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 .gitignore
-library/locallibrary/catalog/__pycache__/
-library/locallibrary/catalog/migrations/__pycache__/
-library/locallibrary/catalog/tests/__pycache__/
-library/locallibrary/locallibrary/__pycache__/
+catalog/__pycache__/
+catalog/migrations/__pycache__/
+catalog/tests/__pycache__/
+locallibrary/__pycache__/
 venv/Include/
 venv/Lib/site-packages/_distutils_hack/__pycache__/
 venv/Lib/site-packages/asgiref/__pycache__/
